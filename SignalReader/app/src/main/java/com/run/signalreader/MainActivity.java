@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         startRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 isRunning = true;
 
                 try {
@@ -65,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
         File dir = new File(parent_path.getAbsoluteFile(), "RunNishino");
         dir.mkdir();
 
-        //TODO:将时间写进文件名里
-        File file = new File(dir.getAbsoluteFile(), "myfile8.txt");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(new Date()) + " Signal Record" + ".txt";
+
+        File file = new File(dir.getAbsoluteFile(), date);
 
         Log.d("文件路径", file.getAbsolutePath());
 
@@ -84,8 +89,11 @@ public class MainActivity extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                //TODO:将信号读取出来，并且在前面加上时间
-                String data = "hello, world! RunNishino \n";
+                //TODO:将信号读取出来
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                String data = sdf.format(new Date()) + " Signal Here \n";
                 byte[] buffer = data.getBytes();
 
                 try {
